@@ -8,6 +8,7 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@grikomsn/cal-sans": "^0.0.2",
     "@mantine/core": "^3.3.2",
     "@mantine/hooks": "^3.3.2",
     "@mantine/next": "^3.3.2",
