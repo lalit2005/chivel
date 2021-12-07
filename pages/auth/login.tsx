@@ -6,7 +6,7 @@ const LoginPage: NextPage = () => {
   return (
     <AppLayout>
       <div>
-        <h1 className="mt-20 text-5xl font-extrabold text-center">
+        <h1 className="mt-20 text-5xl font-extrabold text-center font-cal">
           Welcome back 👋
         </h1>
         <div className="mt-20 text-lg">
