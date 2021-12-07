@@ -21,7 +21,9 @@ const Home: NextPage = () => {
         </ul>
       </nav>
       <div className="pt-32 text-6xl font-black text-center font-cal">
-        <h1>Make landing pages for your mobile apps</h1>
+        <h1>
+          Create a stunning landing page <br /> for your Youtube channel
+        </h1>
         <span className="text-transparent opacity-80 bg-clip-text bg-gradient-to-r from-yellow-300 via-purple-300 to-blue-500">
           in seconds.
         </span>
