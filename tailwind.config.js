@@ -5,6 +5,7 @@ module.exports = {
     "./layouts/**/*.{js,ts,jsx,tsx}",
   ],
   darkMode: false, // or 'media' or 'class'
+  mode: "jit",
   theme: {
     extend: {
       fontFamily: {

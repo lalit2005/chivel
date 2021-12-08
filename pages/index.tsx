@@ -17,9 +17,11 @@ const Home: NextPage = () => {
         <div className="grid items-start justify-center gap-8">
           <div className="relative group">
             <div className="absolute -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-75 group-hover:opacity-100 transition filter blur-2xl duration-1000 group-hover:duration-200 animate-tilt"></div>
-            <button className="px-12 py-4 text-2xl font-bold text-white transition-all duration-150 transform bg-gray-800 border border-gray-600 rounded font-cal hover:scale-105">
-              Get Started <span className="ml-2 ">&rarr;</span>
-            </button>
+            <Link href="/auth/login">
+              <a className="block px-12 py-4 text-2xl font-bold text-white transition-all duration-150 transform bg-gray-800 border border-gray-600 rounded font-cal hover:scale-105">
+                Get Started <span className="ml-2 ">&rarr;</span>
+              </a>
+            </Link>
           </div>
         </div>
       </div>
