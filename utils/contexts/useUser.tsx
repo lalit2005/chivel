@@ -12,15 +12,27 @@ import { createContext, useContext, useEffect, useState } from 'react'
 type UserContextType = {
   session: Session
   user: User
-  userLoaded: boolean
-  signIn: (options: SignInOptions) => Promise<{
+  isLoading?: boolean
+  signIn: (
+    { email, phone, password, refreshToken, provider }: UserCredentials,
+    { redirectTo, scopes }: { redirectTo?: string; scopes?: string }
+  ) => Promise<{
     session: Session | null
     user: User | null
     provider?: Provider | null
     url?: string | undefined
     error: ApiError | null
   }>
-  signUp: (options: SignUpOptions) => Promise<{
+  signUp: (
+    { email, phone, password, refreshToken, provider }: UserCredentials,
+    {
+      redirectTo,
+      data,
+    }: {
+      redirectTo?: string | undefined
+      data?: object | undefined
+    }
+  ) => Promise<{
     user: User | null
     session: Session | null
     error: ApiError | null
@@ -33,25 +45,28 @@ type UserContextType = {
 export const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export const UserContextProvider = (props: any) => {
-  const [userLoaded, setUserLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [session, setSession] = useState<Session | null>(null)
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
+    setIsLoading(true)
     const session = supabase.auth.session()
     setSession(session)
     setUser(session?.user ?? null)
     const { data: authListener } = supabase.auth.onAuthStateChange(
       async (event: AuthChangeEvent, session: Session | null) => {
+        setUser(session?.user ?? null)
+        setIsLoading(false)
         handleAuthChange(event, session)
         setSession(session)
-        setUser(session?.user ?? null)
       }
     )
+    setIsLoading(false)
     return () => {
       authListener?.unsubscribe()
     }
-  }, [])
+  })
 
   const handleAuthChange = async (
     event: AuthChangeEvent,
@@ -67,16 +82,30 @@ export const UserContextProvider = (props: any) => {
 
   useEffect(() => {
     if (user) {
-      setUserLoaded(true)
+      setIsLoading(false)
     }
   }, [user])
 
   const value = {
     session,
     user,
-    userLoaded,
-    signIn: (options: SignInOptions) => supabase.auth.signIn(options),
-    signUp: (options: SignUpOptions) => supabase.auth.signUp(options),
+    isLoading,
+    signIn: (
+      { email, phone, password, refreshToken, provider }: UserCredentials,
+      { redirectTo, scopes }: { redirectTo?: string; scopes?: string }
+    ) =>
+      supabase.auth.signIn(
+        { email, phone, password, refreshToken, provider },
+        { redirectTo, scopes }
+      ),
+    signUp: (
+      { email, phone, password, refreshToken, provider }: UserCredentials,
+      { redirectTo, data }: { redirectTo?: string; data?: object }
+    ) =>
+      supabase.auth.signUp(
+        { email, phone, password, refreshToken, provider },
+        { redirectTo, data }
+      ),
     signOut: () => {
       setUser(null)
       return supabase.auth.signOut()
@@ -92,19 +121,4 @@ export const useUser = () => {
     throw new Error(`useUser must be used within a UserContextProvider.`)
   }
   return context
-}
-
-interface SignInOptions {
-  email?: string | undefined
-  phone?: string | undefined
-  password?: string | undefined
-  refreshToken?: string | undefined
-  provider?: Provider | undefined
-  redirectTo?: string | undefined
-  scopes?: string | undefined
-}
-
-interface SignUpOptions extends UserCredentials {
-  redirectTo?: string | undefined
-  data?: object | undefined
 }
