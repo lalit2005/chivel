@@ -33,11 +33,12 @@ type UserContextType = {
 export const UserContext = createContext<UserContextType | undefined>(undefined)
 
 export const UserContextProvider = (props: any) => {
-  const [userLoaded, setUserLoaded] = useState(false)
+  const [isLoading, setIsLoading] = useState(true)
   const [session, setSession] = useState<Session | null>(null)
   const [user, setUser] = useState<User | null>(null)
 
   useEffect(() => {
+    setIsLoading(true)
     const session = supabase.auth.session()
     setSession(session)
     setUser(session?.user ?? null)
@@ -46,6 +47,7 @@ export const UserContextProvider = (props: any) => {
         handleAuthChange(event, session)
         setSession(session)
         setUser(session?.user ?? null)
+        setIsLoading(false)
       }
     )
     return () => {
@@ -67,14 +69,14 @@ export const UserContextProvider = (props: any) => {
 
   useEffect(() => {
     if (user) {
-      setUserLoaded(true)
+      setIsLoading(false)
     }
   }, [user])
 
   const value = {
     session,
     user,
-    userLoaded,
+    isLoading,
     signIn: (options: SignInOptions) => supabase.auth.signIn(options),
     signUp: (options: SignUpOptions) => supabase.auth.signUp(options),
     signOut: () => {
