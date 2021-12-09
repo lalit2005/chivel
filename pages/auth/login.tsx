@@ -28,6 +28,7 @@ const LoginPage: NextPage = () => {
           <button
             className='block px-10 py-2 mx-auto my-5 font-bold text-white bg-blue-500 rounded hover:bg-blue-700 focus:outline-none focus:shadow-outline'
             type='button'
+            onClick={handleSignIn.bind(null, 'twitter')}
           >
             <ImTwitter className='relative inline-block mr-3 bottom-px' /> Sign
             in with Twitter
@@ -35,6 +36,7 @@ const LoginPage: NextPage = () => {
           <button
             className='block px-10 py-2 mx-auto my-5 font-bold text-black bg-white rounded hover:bg-gray-100 focus:outline-none focus:shadow-outline'
             type='button'
+            onClick={handleSignIn.bind(null, 'github')}
           >
             <ImGithub className='relative inline-block mr-3 bottom-px' />
             Sign in with GitHub
