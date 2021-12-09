@@ -1,14 +1,23 @@
+import getConfigs from '@/utils/configs'
 import { useUser } from '@/utils/contexts/useUser'
 import { Provider } from '@supabase/gotrue-js'
 import AppLayout from 'layouts/AppLayout'
+import supabase from 'libs/supabase'
 import { NextPage } from 'next'
+import { useRouter } from 'next/router'
 import { ImGithub, ImGoogle, ImTwitter } from 'react-icons/im'
 
 const LoginPage: NextPage = () => {
   const { user, signIn } = useUser()
+  const { baseUrl } = getConfigs()
+  const router = useRouter()
+  const redirectTo =
+    baseUrl + (router.query.returnTo?.toString() ?? '/dashboard')
+  console.log(redirectTo)
 
   const handleSignIn = (provider: Provider) => {
-    signIn({ provider: provider })
+    // signIn({ provider: provider }, { redirectTo })
+    supabase.auth.signIn({ provider: provider }, { redirectTo })
   }
   return (
     <AppLayout>
