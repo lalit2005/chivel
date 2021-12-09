@@ -7,7 +7,7 @@ import clsx from "clsx";
 const DashboardLayout: React.FC<{
   heading: string;
   description: string;
-  page: "setup" | "analytics" | "navbar" | "settings" | "snippet";
+  page: "setup" | "seo" | "navbar" | "settings" | "snippet";
 }> = ({ page, heading, description, ...props }) => {
   return (
     <div className="flex text-white bg-black">
@@ -43,14 +43,14 @@ const DashboardLayout: React.FC<{
               Navbar
             </a>
           </Link>
-          <Link href="/dashboard/analytics">
+          <Link href="/dashboard/seo">
             <a
               className={clsx(
                 "block w-full px-4 py-2 text-gray-300 rounded hover:bg-gray-900 hover:text-gray-50",
-                page === "analytics" && "bg-gray-900 text-gray-50"
+                page === "seo" && "bg-gray-900 text-gray-50"
               )}>
               <VscGraphLine className="relative inline-block mr-3 bottom-px" />
-              Analytics
+              SEO
             </a>
           </Link>
           <Link href="/dashboard/settings">
