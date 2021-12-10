@@ -85,6 +85,6 @@ export const getStaticProps: GetStaticProps = ({ params }) => {
 export const getStaticPaths: GetStaticPaths = () => {
   return {
     paths: [],
-    fallback: true,
+    fallback: 'blocking',
   };
 };
