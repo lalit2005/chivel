@@ -8,7 +8,7 @@ datasource db {
 }
 
 model YtSites {
-  id               String    @id(map: "Sites_pkey") @db.Uuid
+  id               String    @id(map: "Sites_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   siteName         String?   @unique(map: "Sites_siteName_key") @db.VarChar
   ytChannelUrl     String?   @db.VarChar
   createdBy        String    @db.VarChar

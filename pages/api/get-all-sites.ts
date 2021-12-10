@@ -1,28 +1,21 @@
 import { NextApiRequest, NextApiResponse } from 'next';
 import prisma from 'libs/prisma';
 import { getUser } from '@/utils/getUser';
+import { User } from '@supabase/gotrue-js';
+import withApiAuthRequired from '@/utils/withApiAuthRequired';
 
-export default async function handler(
+async function handler(
   req: NextApiRequest,
-  res: NextApiResponse
+  res: NextApiResponse,
+  user: User | null
 ) {
-  try {
-    const { data } = await getUser(req);
-    if (!data) {
-      res.status(401).json({
-        message: 'Unauthorized',
-      });
-    }
-    const id = data?.id;
-    const allSites = await prisma.ytSites.findMany({
-      where: {
-        createdBy: id,
-      },
-    });
-    res.json(allSites);
-  } catch (e) {
-    res.json({
-      success: false,
-    });
-  }
+  const id = user?.id;
+  const allSites = await prisma.ytSites.findMany({
+    where: {
+      createdBy: id,
+    },
+  });
+  res.json(allSites);
 }
+
+export default withApiAuthRequired(handler);

@@ -9,7 +9,7 @@ function ProfileDropdown() {
   } = useUser();
 
   return (
-    <Menu>
+    <Menu as='div' className='relative'>
       <Menu.Button>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img
@@ -27,7 +27,7 @@ function ProfileDropdown() {
         leave='transition duration-75 ease-out'
         leaveFrom='transform scale-100 opacity-100'
         leaveTo='transform scale-95 opacity-0'>
-        <Menu.Items className='inline-block px-5 py-6 space-y-3 text-gray-300 border border-gray-600 rounded-sm shadow-xl'>
+        <Menu.Items className='absolute bg-black   top-full right-0 z-50 inline-block px-5 py-6 space-y-3 text-gray-300 border border-gray-600 rounded-sm shadow-xl'>
           <Menu.Item>
             <div className='pb-2 mb-2 text-sm border-b border-gray-600'>
               Signed in as
