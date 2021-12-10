@@ -1,4 +1,5 @@
 import { User } from '@supabase/gotrue-js'
+import { useRouter } from 'next/router'
 import { useEffect } from 'react'
 import { useUser } from './contexts/useUser'
 
@@ -6,11 +7,6 @@ import { useUser } from './contexts/useUser'
  * @ignore
  */
 const defaultOnRedirecting = (): JSX.Element => <>Redirecting</>
-
-/**
- * @ignore
- */
-const defaultOnError = (): JSX.Element => <></>
 
 export interface WithPageAuthRequiredOptions {
   /**
@@ -56,6 +52,7 @@ const withPageAuthRequired: WithPageAuthRequired = (
     const { returnTo, onRedirecting = defaultOnRedirecting } = options
     const loginUrl = '/auth/login'
     const { user, isLoading } = useUser()
+    const router = useRouter()
 
     useEffect(() => {
       console.log(user)
@@ -70,9 +67,8 @@ const withPageAuthRequired: WithPageAuthRequired = (
         returnToPath = returnTo
       }
 
-      console.log(
-        window.location.assign(`${loginUrl}?returnTo=${returnToPath}`)
-      )
+      // window.location.assign(`${loginUrl}?returnTo=${returnToPath}`)
+      router.push(`${loginUrl}?returnTo=${returnToPath}`)
     }, [user, isLoading])
 
     if (user) return <Component user={user} {...(props as any)} />

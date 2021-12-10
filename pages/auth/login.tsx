@@ -1,5 +1,6 @@
 import getConfigs from '@/utils/configs'
 import { useUser } from '@/utils/contexts/useUser'
+import withRedirectIfAutheticated from '@/utils/withRedirectIfAutheticated'
 import { Provider } from '@supabase/gotrue-js'
 import AppLayout from 'layouts/AppLayout'
 import supabase from 'libs/supabase'
@@ -16,8 +17,7 @@ const LoginPage: NextPage = () => {
   console.log(redirectTo)
 
   const handleSignIn = (provider: Provider) => {
-    // signIn({ provider: provider }, { redirectTo })
-    supabase.auth.signIn({ provider: provider }, { redirectTo })
+    signIn({ provider: provider }, { redirectTo })
   }
   return (
     <AppLayout>
@@ -56,4 +56,6 @@ const LoginPage: NextPage = () => {
   )
 }
 
-export default LoginPage
+export default withRedirectIfAutheticated(LoginPage, {
+  redirectTo: '/dashboard',
+})
