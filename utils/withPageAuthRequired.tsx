@@ -1,4 +1,5 @@
 import { User } from "@supabase/gotrue-js";
+import { useRouter } from "next/router";
 import { useEffect } from "react";
 import { useUser } from "./contexts/useUser";
 
@@ -6,15 +7,6 @@ import { useUser } from "./contexts/useUser";
  * @ignore
  */
 const defaultOnRedirecting = (): JSX.Element => (
-  <>
-    <div className="min-h-screen bg-black" />
-  </>
-);
-
-/**
- * @ignore
- */
-const defaultOnError = (): JSX.Element => (
   <>
     <div className="min-h-screen bg-black" />
   </>
@@ -65,6 +57,8 @@ const withPageAuthRequired: WithPageAuthRequired = (
     const loginUrl = "/auth/login";
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { user, isLoading } = useUser();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const router = useRouter();
 
     // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
@@ -80,10 +74,8 @@ const withPageAuthRequired: WithPageAuthRequired = (
         returnToPath = returnTo;
       }
 
-      console.log(
-        window.location.assign(`${loginUrl}?returnTo=${returnToPath}`)
-      );
-      // eslint-disable-next-line react-hooks/exhaustive-deps
+      // window.location.assign(`${loginUrl}?returnTo=${returnToPath}`)
+      router.push(`${loginUrl}?returnTo=${returnToPath}`);
     }, [user, isLoading]);
 
     if (user) return <Component user={user} {...(props as any)} />;
