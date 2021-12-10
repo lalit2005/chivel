@@ -7,15 +7,17 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model AppstoreSites {
-  id                String    @id(map: "Sites_pkey") @db.Uuid
-  siteName          String?   @unique(map: "Sites_siteName_key") @db.VarChar
-  appStoreUrl       String?   @db.VarChar
-  createdBy         String    @db.VarChar
-  createdAt         DateTime? @default(now()) @db.Timestamptz(6)
-  updatedAt         DateTime? @db.Timestamp(6)
-  customCss         String?   @db.VarChar
-  customHead        String?   @db.VarChar
-  views             BigInt?   @default(0)
-  downloadBtnClicks BigInt?   @default(0)
+model YtSites {
+  id               String    @id(map: "Sites_pkey") @db.Uuid
+  siteName         String?   @unique(map: "Sites_siteName_key") @db.VarChar
+  ytChannelUrl     String?   @db.VarChar
+  createdBy        String    @db.VarChar
+  createdAt        DateTime? @default(now()) @db.Timestamptz(6)
+  customCss        String?   @db.VarChar
+  customHead       String?   @db.VarChar
+  announcementText String?   @db.VarChar
+  announcementUrl  String?   @db.VarChar
+  navbarLinks      String[]  @db.VarChar
+  ogImageUrl       String?   @db.VarChar
+  siteDescription  String?   @db.VarChar
 }

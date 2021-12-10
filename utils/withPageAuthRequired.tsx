@@ -1,16 +1,24 @@
-import { User } from '@supabase/gotrue-js'
-import { useEffect } from 'react'
-import { useUser } from './contexts/useUser'
+import { User } from "@supabase/gotrue-js";
+import { useEffect } from "react";
+import { useUser } from "./contexts/useUser";
 
 /**
  * @ignore
  */
-const defaultOnRedirecting = (): JSX.Element => <>Redirecting</>
+const defaultOnRedirecting = (): JSX.Element => (
+  <>
+    <div className="min-h-screen bg-black" />
+  </>
+);
 
 /**
  * @ignore
  */
-const defaultOnError = (): JSX.Element => <></>
+const defaultOnError = (): JSX.Element => (
+  <>
+    <div className="min-h-screen bg-black" />
+  </>
+);
 
 export interface WithPageAuthRequiredOptions {
   /**
@@ -22,7 +30,7 @@ export interface WithPageAuthRequiredOptions {
    *
    * Add a path to return the user to after login.
    */
-  returnTo?: string
+  returnTo?: string;
   /**
    * ```js
    * withPageAuthRequired(Profile, {
@@ -32,53 +40,56 @@ export interface WithPageAuthRequiredOptions {
    *
    * Render a message to show that the user is being redirected to the login.
    */
-  onRedirecting?: () => JSX.Element
+  onRedirecting?: () => JSX.Element;
 }
 
 /**
  * @ignore
  */
 export interface WithPageAuthRequiredProps {
-  user: User
-  [key: string]: any
+  user: User;
+  [key: string]: any;
 }
 
 export type WithPageAuthRequired = <P extends WithPageAuthRequiredProps>(
   Component: React.ComponentType<P>,
   options?: WithPageAuthRequiredOptions
-) => React.FC<Omit<P, 'user'>>
+) => React.FC<Omit<P, "user">>;
 
 const withPageAuthRequired: WithPageAuthRequired = (
   Component,
   options = {}
 ) => {
   return function withPageAuthRequired(props): JSX.Element {
-    const { returnTo, onRedirecting = defaultOnRedirecting } = options
-    const loginUrl = '/auth/login'
-    const { user, isLoading } = useUser()
+    const { returnTo, onRedirecting = defaultOnRedirecting } = options;
+    const loginUrl = "/auth/login";
+    // eslint-disable-next-line react-hooks/rules-of-hooks
+    const { user, isLoading } = useUser();
 
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
-      console.log(user)
-      if (user || isLoading) return
-      let returnToPath: string
+      console.log(user);
+      if (user || isLoading) return;
+      let returnToPath: string;
 
       if (!returnTo) {
-        const currentLocation = window.location.toString()
+        const currentLocation = window.location.toString();
         returnToPath =
-          currentLocation.replace(new URL(currentLocation).origin, '') || '/'
+          currentLocation.replace(new URL(currentLocation).origin, "") || "/";
       } else {
-        returnToPath = returnTo
+        returnToPath = returnTo;
       }
 
       console.log(
         window.location.assign(`${loginUrl}?returnTo=${returnToPath}`)
-      )
-    }, [user, isLoading])
+      );
+      // eslint-disable-next-line react-hooks/exhaustive-deps
+    }, [user, isLoading]);
 
-    if (user) return <Component user={user} {...(props as any)} />
+    if (user) return <Component user={user} {...(props as any)} />;
 
-    return onRedirecting()
-  }
-}
+    return onRedirecting();
+  };
+};
 
-export default withPageAuthRequired
+export default withPageAuthRequired;
