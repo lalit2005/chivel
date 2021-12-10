@@ -1,10 +1,10 @@
-import AppLayout from '@/layouts/AppLayout'
-import { useUser } from '@/utils/contexts/useUser'
-import type { NextPage } from 'next'
-import Link from 'next/link'
+import AppLayout from "@/layouts/AppLayout";
+import { useUser } from "@/utils/contexts/useUser";
+import type { NextPage } from "next";
+import Link from "next/link";
 
 const Home: NextPage = () => {
-  const { user, signOut } = useUser()
+  const { user, signOut } = useUser();
   return (
     <AppLayout>
       <div className='pt-32 text-6xl font-black text-center font-cal'>
@@ -35,7 +35,7 @@ const Home: NextPage = () => {
         </div>
       </div>
     </AppLayout>
-  )
-}
+  );
+};
 
-export default Home
+export default Home;

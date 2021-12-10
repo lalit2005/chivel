@@ -1,5 +1,5 @@
-import Navbar from 'components/common/Navbar'
-import { LayoutProps } from '../utils/types'
+import Navbar from "components/common/Navbar";
+import { LayoutProps } from "../utils/types";
 
 const AppLayout = ({ children }: LayoutProps) => {
   return (
@@ -7,7 +7,7 @@ const AppLayout = ({ children }: LayoutProps) => {
       <Navbar />
       <main className='max-w-4xl mx-auto'>{children}</main>
     </div>
-  )
-}
+  );
+};
 
-export default AppLayout
+export default AppLayout;

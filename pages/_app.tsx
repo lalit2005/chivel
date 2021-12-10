@@ -1,7 +1,7 @@
-import '../styles/globals.css'
-import type { AppProps } from 'next/app'
-import '@grikomsn/cal-sans'
-import { UserContextProvider } from '@/utils/contexts/useUser'
+import "../styles/globals.css";
+import type { AppProps } from "next/app";
+import "@grikomsn/cal-sans";
+import { UserContextProvider } from "@/utils/contexts/useUser";
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -10,7 +10,7 @@ function MyApp({ Component, pageProps }: AppProps) {
         <Component {...pageProps} />
       </UserContextProvider>
     </div>
-  )
+  );
 }
 
-export default MyApp
+export default MyApp;

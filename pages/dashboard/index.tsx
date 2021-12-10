@@ -1,10 +1,10 @@
-import DashboardLayout from '@/layouts/DashboardLayout'
-import { useUser } from '@/utils/contexts/useUser'
-import withPageAuthRequired from '@/utils/withPageAuthRequired'
+import DashboardLayout from "@/layouts/DashboardLayout";
+import { useUser } from "@/utils/contexts/useUser";
+import withPageAuthRequired from "@/utils/withPageAuthRequired";
 
 const Page = () => {
-  const { isLoading, user } = useUser()
-  console.log(isLoading, user)
+  const { isLoading, user } = useUser();
+  console.log(isLoading, user);
   return (
     <DashboardLayout
       page='setup'
@@ -13,7 +13,7 @@ const Page = () => {
     >
       {isLoading}
     </DashboardLayout>
-  )
-}
+  );
+};
 
-export default withPageAuthRequired(Page)
+export default withPageAuthRequired(Page);
