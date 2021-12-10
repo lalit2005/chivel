@@ -1,8 +1,7 @@
-import { User } from "@supabase/gotrue-js";
-import { useRouter } from "next/router";
-import dashboard from "pages/dashboard";
-import { useEffect } from "react";
-import { useUser } from "./contexts/useUser";
+import { User } from '@supabase/gotrue-js';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useUser } from './contexts/useUser';
 
 const defaultOnRedirecting = (): JSX.Element => <>Redirecting</>;
 
@@ -24,7 +23,7 @@ export type WithRedirectIfAutheticated = <
 >(
   Component: React.ComponentType<P>,
   options?: WithRedirectIfAutheticatedOptions
-) => React.FC<Omit<P, "user">>;
+) => React.FC<Omit<P, 'user'>>;
 
 const withRedirectIfAutheticated: WithRedirectIfAutheticated = (
   Component,
@@ -32,9 +31,12 @@ const withRedirectIfAutheticated: WithRedirectIfAutheticated = (
 ) => {
   return function withRedirectIfAuthenticated(props): JSX.Element {
     const { redirectTo, onRedirecting = defaultOnRedirecting } = options;
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const { user, isLoading } = useUser();
-    const dashboardUrl = "/dashboard";
+    const dashboardUrl = '/dashboard';
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     const router = useRouter();
+    // eslint-disable-next-line react-hooks/rules-of-hooks
     useEffect(() => {
       if (!user || isLoading) return;
       let returnToPath: string;
