@@ -2,9 +2,9 @@ import { NextApiHandler, NextApiRequest, NextApiResponse } from 'next';
 import { getUser } from './getUser';
 
 export type WithApiAuthRequired = (apiRoute: NextApiHandler) => NextApiHandler;
-
-export default function withApiAuthRequired(apiRoute: WithApiAuthRequired) {
-  return (apiRoute: NextApiHandler) =>
+// This doesn't work now, but it's a good idea to have it here in case we want to use it later.
+export default function withApiAuthRequired(apiRoute: NextApiHandler) {
+  return () =>
     async (req: NextApiRequest, res: NextApiResponse): Promise<void> => {
       const { data: user, error } = await getUser(req);
       if (!user) {
@@ -12,7 +12,6 @@ export default function withApiAuthRequired(apiRoute: WithApiAuthRequired) {
           error: 'Unauthorized',
           description: { error },
         });
-        return;
       }
 
       await apiRoute(req, res);
