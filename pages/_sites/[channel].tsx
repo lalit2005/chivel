@@ -1,5 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 
+// @ts-ignore
 const Page = ({ name }) => {
   const navLinks = [
     {
