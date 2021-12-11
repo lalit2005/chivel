@@ -19,12 +19,12 @@ const Page = ({ data }) => {
     <div className='text-white bg-black'>
       <div className='flex flex-col min-h-screen justify-between w-full max-w-4xl py-6 mx-auto sm:px-0'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <nav className='flex items-center justify-between space-x-6'>
+        <nav className='container mx-auto flex items-center justify-between px-4 md:px-6'>
           <img src={data.avatar} width='50' height='50' alt={data.title} />
           <ul className='flex gap-4'>
-            {navLinks.map((navLink) => {
+            {navLinks.map((navLink, index) => {
               return (
-                <li>
+                <li key={index}>
                   <a
                     href={navLink.href}
                     key={navLink.text}
@@ -44,7 +44,7 @@ const Page = ({ data }) => {
                 {data.title}
               </h1>
             </div>
-            <p className='mt-8 text-lg text-gray-400 max-w-2xl mx-auto'>
+            <p className='mt-8 text-lg text-gray-400 max-w-2xl px-4 md:px-6 mx-auto'>
               {data.description}
             </p>
             <div className='my-20'>
@@ -63,7 +63,7 @@ const Page = ({ data }) => {
       <section
         className='py-20 bg-red-500 text-2xl bg-no-repeat bg-cover bg-center relative'
         style={{ backgroundImage: `url(${data.banner})` }}>
-        <div className='flex items-center justify-between w-full max-w-4xl mx-auto'>
+        <div className='flex text-center md:text-left gap-6 md:gap-0 md:flex-row flex-col items-center justify-between w-full max-w-4xl mx-auto'>
           <div>
             <p className='text-5xl font-bold font-cal'>21k</p>
             <h3 className='font-extrabold text-black uppercase'>Subscribers</h3>
