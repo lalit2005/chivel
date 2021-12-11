@@ -1,7 +1,5 @@
 import axios from 'axios';
-import { channel } from 'diagnostics_channel';
 import { GetStaticPaths, GetStaticProps } from 'next';
-import useSWR from 'swr';
 
 // @ts-ignore
 const Page = ({ data }) => {
@@ -19,7 +17,7 @@ const Page = ({ data }) => {
 
   return (
     <div className='w-screen min-h-screen text-white bg-black'>
-      <div className='flex justify-between w-full max-w-4xl px-4 py-6 mx-auto sm:px-0'>
+      <div className='flex justify-between w-full max-w-4xl py-6 mx-auto sm:px-0'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src={data.avatar} width='50' height='50' alt={data.title} />
         <nav className='flex items-center justify-between space-x-6'>
@@ -35,7 +33,7 @@ const Page = ({ data }) => {
           })}
         </nav>
       </div>
-      <main className='mt-36'>
+      <main className='mt-36' style={{ minHeight: 'calc(100vh - 82px)' }}>
         <div className='text-center'>
           <div className='relative'>
             <div className='absolute max-w-xl mx-auto -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-50 transition filter blur-2xl duration-1000 animate-tilt'></div>
@@ -55,22 +53,24 @@ const Page = ({ data }) => {
           </div>
         </div>
       </main>
-      {/* <section className='py-10 mt-20 bg-red-500'>
+      <section className='py-20 bg-red-500 mt-[-175px] text-2xl'>
         <div className='flex items-center justify-between w-full max-w-4xl mx-auto'>
           <div>
-            <p>21k</p>
-            <h3>Subscribers</h3>
+            <p className='text-5xl font-bold font-cal'>21k</p>
+            <h3 className='font-extrabold text-black uppercase'>Subscribers</h3>
           </div>
           <div>
-            <p>122</p>
-            <h3>Videos</h3>
+            <p className='text-5xl font-bold font-cal'>122</p>
+            <h3 className='font-extrabold text-black uppercase'>Videos</h3>
           </div>
           <div>
-            <p>2244k</p>
-            <h3>Views</h3>
+            <p className='text-5xl font-bold font-cal'>2244k</p>
+            <h3 className='font-extrabold text-black uppercase'>Views</h3>
           </div>
         </div>
-      </section> */}
+      </section>
+      <div className=''></div>
+      <section></section>
     </div>
   );
 };
