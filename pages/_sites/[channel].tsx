@@ -14,7 +14,7 @@ const Page = ({ name }) => {
   ];
 
   return (
-    <div className='min-h-screen text-white bg-black'>
+    <div className='w-screen min-h-screen text-white bg-black'>
       <div className='flex justify-between w-full max-w-4xl px-4 py-6 mx-auto sm:px-0'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img src='https://picsum.photos/50/50' alt='Fireship' />
