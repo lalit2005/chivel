@@ -3,12 +3,11 @@ import withPageAuthRequired from '@/utils/withPageAuthRequired';
 import ProfileDropdown from '@/common/ProfileDropdown';
 import Logo from '@/common/Logo';
 import Navbar from 'components/pages/dashboard/Navbar';
+import Link from 'next/link';
 
 const Page = () => {
   const { isLoading, user } = useUser();
   const { email, user_metadata } = user;
-  console.log(isLoading, user);
-  console.log(user_metadata);
   return (
     <div className='min-h-screen text-white bg-black'>
       <Navbar />
@@ -27,11 +26,19 @@ const Page = () => {
               New site
             </button>
           </div>
-          <div>
-            {/* <div className='px-4 py-2 border border-gray-700'>
-              <h3>Fireship</h3>
-              <p>https://youtube.com/fireship</p>
-            </div> */}
+          <div className='mt-20'>
+            <Link href='#'>
+              <a>
+                <div className='w-full max-w-sm px-5 py-3 border border-gray-700 rounded group'>
+                  <h3 className='mt-3 mb-4 text-2xl font-bold text-gray-400 group-hover:text-gray-100'>
+                    Fireship
+                  </h3>
+                  <p className='mb-3 text-gray-500 group-hover:text-gray-400'>
+                    https://youtube.com/fireship
+                  </p>
+                </div>
+              </a>
+            </Link>
           </div>
         </main>
       </div>

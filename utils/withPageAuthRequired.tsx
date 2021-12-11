@@ -1,14 +1,14 @@
-import { User } from "@supabase/gotrue-js";
-import { useRouter } from "next/router";
-import { useEffect } from "react";
-import { useUser } from "./contexts/useUser";
+import { User } from '@supabase/gotrue-js';
+import { useRouter } from 'next/router';
+import { useEffect } from 'react';
+import { useUser } from './contexts/useUser';
 
 /**
  * @ignore
  */
 const defaultOnRedirecting = (): JSX.Element => (
   <>
-    <div className="min-h-screen bg-black" />
+    <div className='w-screen min-h-screen bg-black' />
   </>
 );
 
@@ -46,7 +46,7 @@ export interface WithPageAuthRequiredProps {
 export type WithPageAuthRequired = <P extends WithPageAuthRequiredProps>(
   Component: React.ComponentType<P>,
   options?: WithPageAuthRequiredOptions
-) => React.FC<Omit<P, "user">>;
+) => React.FC<Omit<P, 'user'>>;
 
 const withPageAuthRequired: WithPageAuthRequired = (
   Component,
@@ -54,7 +54,7 @@ const withPageAuthRequired: WithPageAuthRequired = (
 ) => {
   return function withPageAuthRequired(props): JSX.Element {
     const { returnTo, onRedirecting = defaultOnRedirecting } = options;
-    const loginUrl = "/auth/login";
+    const loginUrl = '/auth/login';
     // eslint-disable-next-line react-hooks/rules-of-hooks
     const { user, isLoading } = useUser();
     // eslint-disable-next-line react-hooks/rules-of-hooks
@@ -69,7 +69,7 @@ const withPageAuthRequired: WithPageAuthRequired = (
       if (!returnTo) {
         const currentLocation = window.location.toString();
         returnToPath =
-          currentLocation.replace(new URL(currentLocation).origin, "") || "/";
+          currentLocation.replace(new URL(currentLocation).origin, '') || '/';
       } else {
         returnToPath = returnTo;
       }

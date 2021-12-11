@@ -1,6 +1,7 @@
 import { Menu, Transition } from '@headlessui/react';
 import { useUser } from '@/utils/contexts/useUser';
 import Link from 'next/link';
+import Tooltip from '@/ui/Tooltip';
 
 function ProfileDropdown() {
   const {
@@ -11,14 +12,16 @@ function ProfileDropdown() {
   return (
     <Menu as='div' className='relative'>
       <Menu.Button>
-        {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img
-          src={user_metadata.avatar_url}
-          alt={email}
-          width={50}
-          height={50}
-          className='rounded-full'
-        />
+        <Tooltip text={user_metadata?.full_name} side='left'>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
+          <img
+            src={user_metadata.avatar_url}
+            alt={email}
+            width={50}
+            height={50}
+            className='rounded-full'
+          />
+        </Tooltip>
       </Menu.Button>
       <Transition
         enter='transition duration-100 ease-out'
@@ -27,7 +30,7 @@ function ProfileDropdown() {
         leave='transition duration-75 ease-out'
         leaveFrom='transform scale-100 opacity-100'
         leaveTo='transform scale-95 opacity-0'>
-        <Menu.Items className='absolute bg-black   top-full right-0 z-50 inline-block px-5 py-6 space-y-3 text-gray-300 border border-gray-600 rounded-sm shadow-xl'>
+        <Menu.Items className='absolute right-0 z-50 inline-block px-5 py-6 space-y-3 text-gray-300 bg-black border border-gray-600 rounded-sm shadow-xl top-full'>
           <Menu.Item>
             <div className='pb-2 mb-2 text-sm border-b border-gray-600'>
               Signed in as
@@ -54,7 +57,7 @@ function ProfileDropdown() {
           <Menu.Item>
             <button
               onClick={signOut}
-              className='w-full px-3 py-2 mt-3 border border-gray-700 rounded hover:border-gray-500'>
+              className='block text-red-400 hover:underline'>
               Logout
             </button>
           </Menu.Item>

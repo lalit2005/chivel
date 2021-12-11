@@ -10,10 +10,8 @@
   "dependencies": {
     "@grikomsn/cal-sans": "^0.0.2",
     "@headlessui/react": "^1.4.2",
-    "@mantine/core": "^3.3.2",
-    "@mantine/hooks": "^3.3.2",
-    "@mantine/next": "^3.3.2",
     "@prisma/client": "^3.6.0",
+    "@radix-ui/react-tooltip": "^0.1.4",
     "@supabase/supabase-js": "^1.28.5",
     "@tailwindcss/forms": "^0.3.4",
     "clsx": "^1.1.1",
