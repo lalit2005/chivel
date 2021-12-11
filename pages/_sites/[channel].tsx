@@ -1,5 +1,4 @@
 import axios from 'axios';
-import { url } from 'inspector';
 import { GetStaticPaths, GetStaticProps } from 'next';
 
 // @ts-ignore
@@ -17,9 +16,10 @@ const Page = ({ data }) => {
 
   return (
     <div className='text-white bg-black'>
-      <div className='flex flex-col min-h-screen justify-between w-full max-w-4xl py-6 mx-auto sm:px-0'>
+      <div className='flex flex-col justify-between w-full max-w-4xl min-h-screen py-6 mx-auto sm:px-0'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <nav className='container mx-auto flex items-center justify-between px-4 md:px-6'>
+        <nav className='container flex items-center justify-between px-4 mx-auto md:px-6'>
+          {/* eslint-disable-next-line @next/next/no-img-element */}
           <img src={data.avatar} width='50' height='50' alt={data.title} />
           <ul className='flex gap-4'>
             {navLinks.map((navLink, index) => {
@@ -44,7 +44,7 @@ const Page = ({ data }) => {
                 {data.title}
               </h1>
             </div>
-            <p className='mt-8 text-lg text-gray-400 max-w-2xl px-4 md:px-6 mx-auto'>
+            <p className='max-w-2xl px-4 mx-auto mt-8 text-lg text-gray-400 md:px-6'>
               {data.description}
             </p>
             <div className='my-20'>
@@ -61,9 +61,9 @@ const Page = ({ data }) => {
       </div>
 
       <section
-        className='py-20 bg-red-500 text-2xl bg-no-repeat bg-cover bg-center relative'
+        className='relative py-20 text-2xl bg-red-500 bg-center bg-no-repeat bg-cover'
         style={{ backgroundImage: `url(${data.banner})` }}>
-        <div className='flex text-center md:text-left gap-6 md:gap-0 md:flex-row flex-col items-center justify-between w-full max-w-4xl mx-auto'>
+        <div className='flex flex-col items-center justify-between w-full max-w-4xl gap-6 mx-auto text-center md:text-left md:gap-0 md:flex-row'>
           <div>
             <p className='text-5xl font-bold font-cal'>21k</p>
             <h3 className='font-extrabold text-black uppercase'>Subscribers</h3>
@@ -87,12 +87,26 @@ const Page = ({ data }) => {
 export default Page;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const res = await axios.get(
-    'http://localhost:3000/api/get-youtube?id=UCsBjURrPoezykLs9EqgamOA'
-  );
+  const id = 'UCsBjURrPoezykLs9EqgamOA';
+  const channelFetchUrl = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CbrandingSettings%2Cstatistics&id=${id}&key=${process.env.YOUTUBE_API_KEY}`;
+  const videoFetchUrl = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${process.env.YOUTUBE_API_KEY}`;
+  const channelData = await axios.get(channelFetchUrl);
+  const videoData = await axios.get(videoFetchUrl);
+
+  const requiredData = {
+    id: channelData.data.items[0].id,
+    title: channelData.data.items[0].snippet.title,
+    description: channelData.data.items[0].snippet.description,
+    avatar: channelData.data.items[0].snippet.thumbnails.default.url,
+    banner: channelData.data.items[0].brandingSettings.image.bannerExternalUrl,
+    subscriberCount: channelData.data.items[0].statistics.subscriberCount,
+    videoCount: channelData.data.items[0].statistics.videoCount,
+    viewCount: channelData.data.items[0].statistics.viewCount,
+    videos: videoData.data.items,
+  };
   return {
     props: {
-      data: res.data.data,
+      data: requiredData,
     },
   };
 };
