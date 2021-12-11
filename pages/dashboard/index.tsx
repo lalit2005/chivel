@@ -4,10 +4,14 @@ import ProfileDropdown from '@/common/ProfileDropdown';
 import Logo from '@/common/Logo';
 import Navbar from 'components/pages/dashboard/Navbar';
 import Link from 'next/link';
+import Modal from '@/common/Modal';
+import { useState } from 'react';
+import AddChannel from 'components/forms/AddChannel';
 
 const Page = () => {
   const { isLoading, user } = useUser();
   const { email, user_metadata } = user;
+  const [isCreateModalOpen, setIsCreateModalOpen] = useState(false);
   return (
     <div className='min-h-screen text-white bg-black'>
       <Navbar />
@@ -19,11 +23,15 @@ const Page = () => {
           <div className='flex w-[80%]'>
             <input
               className='w-full bg-gray-800 rounded-l-sm'
-              placeholder='Search all your sites'
+              placeholder='Search all your channels'
               type='text'
             />
-            <button className='text-gray-900 w-[20%] rounded-r-sm bg-gray-50 hover:bg-gray-200'>
-              New site
+            <button
+              onClick={() => {
+                setIsCreateModalOpen(true);
+              }}
+              className='text-gray-900 w-[20%] rounded-r-sm bg-gray-50 hover:bg-gray-200'>
+              New channel
             </button>
           </div>
           <div className='mt-20'>
@@ -42,6 +50,12 @@ const Page = () => {
           </div>
         </main>
       </div>
+      <Modal
+        title='Add a channel'
+        isOpen={isCreateModalOpen}
+        setIsOpen={setIsCreateModalOpen}>
+        <AddChannel />
+      </Modal>
     </div>
   );
 };
