@@ -1,5 +1,7 @@
+import YoutubeVideo from '@/common/YoutubeVideo';
 import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
+import CountUp from 'react-countup';
 
 // @ts-ignore
 const Page = ({ data }) => {
@@ -36,7 +38,7 @@ const Page = ({ data }) => {
             })}
           </ul>
         </nav>
-        <main className='mt-32'>
+        <main className='-mt-10'>
           <div className='text-center'>
             <div className='relative'>
               <div className='absolute max-w-xl mx-auto -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-50 transition filter blur-2xl duration-1000 animate-tilt'></div>
@@ -60,25 +62,75 @@ const Page = ({ data }) => {
         </main>
       </div>
 
-      <section
-        className='relative py-20 text-2xl bg-red-500 bg-center bg-no-repeat bg-cover'
-        style={{ backgroundImage: `url(${data.banner})` }}>
+      <section className='relative py-20 text-2xl bg-red-500 bg-center bg-no-repeat bg-cover backdrop-filter backdrop-blur-md backdrop-opacity-70'>
         <div className='flex flex-col items-center justify-between w-full max-w-4xl gap-6 mx-auto text-center md:text-left md:gap-0 md:flex-row'>
           <div>
-            <p className='text-5xl font-bold font-cal'>21k</p>
+            <p className='text-5xl font-bold font-cal'>
+              <CountUp
+                duration={3}
+                delay={1}
+                start={0}
+                end={+data?.subscriberCount}
+              />
+            </p>
             <h3 className='font-extrabold text-black uppercase'>Subscribers</h3>
           </div>
           <div>
-            <p className='text-5xl font-bold font-cal'>122</p>
+            <p className='text-5xl font-bold font-cal'>
+              <CountUp
+                duration={3}
+                delay={1}
+                start={0}
+                end={+data?.videoCount}
+              />
+            </p>
             <h3 className='font-extrabold text-black uppercase'>Videos</h3>
           </div>
           <div>
-            <p className='text-5xl font-bold font-cal'>2244k</p>
-            <h3 className='font-extrabold text-black uppercase'>Views</h3>
+            <p className='text-5xl font-bold font-cal'>
+              <CountUp
+                duration={3}
+                delay={1}
+                start={0}
+                end={+data?.viewCount}
+              />
+            </p>
+            <h3 className='font-extrabold text-black uppercase'>Total Views</h3>
           </div>
         </div>
       </section>
-      <div className=''></div>
+      <svg
+        viewBox='0 0 1440 200'
+        xmlns='http://www.w3.org/2000/svg'
+        xmlnsXlink='http://www.w3.org/1999/xlink'>
+        <path
+          fill='rgba(233, 66, 67, 1)'
+          d='M 0 200 L 731 110 L 731 0 L 0 0 Z'
+          strokeWidth='0'></path>{' '}
+        <path
+          fill='rgba(233, 66, 67, 1)'
+          d='M 730 110 L 1440 200 L 1440 0 L 730 0 Z'
+          strokeWidth='0'></path>{' '}
+      </svg>
+      <div className=''>
+        <h1 className='text-4xl font-extrabold text-center'>
+          Some of the latest ones :)
+        </h1>
+        <div className='grid w-full max-w-4xl grid-cols-1 gap-3 pb-10 mx-auto mt-20 gap-y-10 sm:grid-cols-2'>
+          {data.videos.slice(0, 4).map((video: any) => {
+            return (
+              <div key={video?.id.videoId}>
+                <YoutubeVideo
+                  videoUrl={video?.id.videoId}
+                  imageUrl={video?.snippet.thumbnails.medium.url}
+                  title={video?.snippet.title}
+                />
+              </div>
+            );
+          })}
+        </div>
+        {/* <pre>{JSON.stringify(data?.videos, null, 2)}</pre> */}
+      </div>
       <section></section>
     </div>
   );
@@ -92,7 +144,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const videoFetchUrl = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${process.env.YOUTUBE_API_KEY}`;
   const channelData = await axios.get(channelFetchUrl);
   const videoData = await axios.get(videoFetchUrl);
-
+  console.log(videoData.data);
   const requiredData = {
     id: channelData.data.items[0].id,
     title: channelData.data.items[0].snippet.title,
