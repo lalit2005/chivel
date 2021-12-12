@@ -3,7 +3,7 @@ import withPageAuthRequired from '@/utils/withPageAuthRequired';
 import Navbar from 'components/pages/dashboard/Navbar';
 import Link from 'next/link';
 import Modal from '@/common/Modal';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import AddChannel from 'components/forms/AddChannel';
 import supabase from 'libs/supabase';
 import { Channel } from '@/utils/types';
@@ -16,14 +16,18 @@ const Page = () => {
   const [channels, setChannels] = useState<Channel[] | null>([]);
   const [isChannelLoading, setIsChannelLoading] = useState(false);
   const fetchData = async () => {
+    setIsChannelLoading(true);
     const { data: channelsData, error: channelsError } = await supabase
       .from('channels')
       .select('*')
       .eq('created_by', user.id)
       .order('created_at', { ascending: false });
     setChannels(channelsData);
+    setIsChannelLoading(false);
   };
-  fetchData();
+  useEffect(() => {
+    fetchData();
+  }, []);
   return (
     <div className='min-h-screen text-white bg-black'>
       <Navbar />
@@ -47,14 +51,14 @@ const Page = () => {
             </button>
           </div>
           <div className='mt-20'>
-            {channels && channels.length > 0 && !isChannelLoading ? (
+            {channels &&
+              channels.length > 0 &&
               channels.map((channel) => (
                 <ChannelCard channel={channel} key={channel.id} />
-              ))
-            ) : (
-              <ul className='list-none'>
-                {isLoading ? 'Loading' : 'Not found'}
-              </ul>
+              ))}
+            {isChannelLoading && <div>Loading...</div>}
+            {!isChannelLoading && channels && channels.length === 0 && (
+              <div>No Data Found</div>
             )}
           </div>
         </main>
