@@ -11,7 +11,7 @@ const Setup = () => {
           <a
             href=''
             target='_blank'
-            className='px-5 py-2 rounded my-4 block bg-gray-100 text-black hover:bg-blue-400 hover:animate-pulse'>
+            className='px-5 py-2 rounded my-4 block bg-gray-100 text-black hover:bg-blue-400'>
             Visit Channel
           </a>
         </p>
@@ -19,7 +19,7 @@ const Setup = () => {
           <a
             href=''
             target='_blank'
-            className='px-5 py-2 rounded my-4 block bg-gray-100 text-black hover:bg-green-400 hover:animate-pulse'>
+            className='px-5 py-2 rounded my-4 block bg-gray-100 text-black hover:bg-green-400'>
             View Website
           </a>
         </p>
@@ -27,7 +27,7 @@ const Setup = () => {
           <a
             href=''
             target='_blank'
-            className='px-5 py-2 rounded my-4 block bg-gray-100 text-black hover:bg-red-400 hover:animate-pulse'>
+            className='px-5 py-2 rounded my-4 block bg-gray-100 text-black hover:bg-red-400'>
             View Website&apos;s lighthouse score
           </a>
         </p>
