@@ -23,18 +23,20 @@ const Analytics = () => {
         subdomain='channel'
       />
 
-      <Dropzone
-        onDrop={(files) => {
-          uploadImage(files, id);
-        }}>
-        {({ getRootProps, getInputProps }) => (
-          <div {...getRootProps()}>
-            <input type='file' {...getInputProps()} />
-            <BiCloudUpload className='relative inline-block w-5 h-5 bottom-px' />{' '}
-            Upload image
-          </div>
-        )}
-      </Dropzone>
+      <div className='my-20 bg-green-600 cursor-pointer px-3 py-1 rounded hover:bg-green-800'>
+        <Dropzone
+          onDrop={(files) => {
+            uploadImage(files, id);
+          }}>
+          {({ getRootProps, getInputProps }) => (
+            <div {...getRootProps()}>
+              <input type='file' {...getInputProps()} />
+              <BiCloudUpload className='relative inline-block mt-30 w-5 h-5 bottom-px' />{' '}
+              Upload new OG image for this
+            </div>
+          )}
+        </Dropzone>
+      </div>
     </DashboardLayout>
   );
 };
