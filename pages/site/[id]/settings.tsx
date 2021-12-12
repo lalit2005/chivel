@@ -1,8 +1,8 @@
 import { BsTrash } from 'react-icons/bs';
+import { useState } from 'react';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import { useRouter } from 'next/router';
 import Modal from '@/common/Modal';
-import { useState } from 'react';
 
 const Setup = () => {
   const router = useRouter();
@@ -23,7 +23,13 @@ const Setup = () => {
         title='Are you sure? This cannot be undone!'
         isOpen={deleteModal}
         setIsOpen={setDeleteModal}>
-        Hello
+        <button
+          className='px-4 bg-red-500 py-2 rounded hover:bg-red-700'
+          onClick={() => {
+            // TODO: Delete site
+          }}>
+          Yes, Proceed
+        </button>
       </Modal>
     </DashboardLayout>
   );

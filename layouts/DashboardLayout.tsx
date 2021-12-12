@@ -4,6 +4,7 @@ import { FiSettings, FiInbox } from 'react-icons/fi';
 import { VscGraphLine } from 'react-icons/vsc';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
+import ReactMarkdown from 'react-markdown';
 
 const DashboardLayout: React.FC<{
   heading: string;
@@ -71,9 +72,20 @@ const DashboardLayout: React.FC<{
       </div>
       <div className='pt-24 pl-20'>
         <h1 className='text-4xl font-extrabold font-cal'>{heading}</h1>
-        <p className='mt-5 text-gray-300 mb-14'>{description}</p>
+        <p className='mt-5 text-gray-300 mb-14 desc'>
+          <ReactMarkdown>{description}</ReactMarkdown>
+        </p>
         {props.children}
       </div>
+      <style>{`
+			.desc a {
+				text-decoration: underline;
+			}
+			.desc a:hover {
+				background-color: lightgray;
+				color: black;
+			}
+			`}</style>
     </div>
   );
 };

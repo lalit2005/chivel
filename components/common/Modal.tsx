@@ -53,14 +53,14 @@ export default function Modal({
             leave='ease-in duration-200'
             leaveFrom='opacity-100 scale-100'
             leaveTo='opacity-0 scale-95'>
-            <div className='inline-block text-left w-full max-w-xl align-middle transition-all transform bg-black text-gray-50 rounded-md shadow-xl border border-gray-700'>
+            <div className='inline-block text-left w-full max-w-xl align-middle transition-all transform bg-black text-gray-50 rounded-sm shadow-xl border border-gray-700'>
               <div className='p-4 flex border-b border-gray-800 justify-between items-center'>
                 <Dialog.Title as='h3' className='text-lg font-medium leading-6'>
                   {title}
                 </Dialog.Title>
                 <button
                   onClick={closeModal}
-                  className='text-xl hover:bg-gray-800 rounded px-2'>
+                  className='text-xl hover:bg-gray-800 rounded-sm px-2'>
                   &times;
                 </button>
               </div>

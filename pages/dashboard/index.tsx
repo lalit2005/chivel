@@ -1,7 +1,6 @@
 import { useUser } from '@/utils/contexts/useUser';
 import withPageAuthRequired from '@/utils/withPageAuthRequired';
 import Navbar from 'components/pages/dashboard/Navbar';
-import Link from 'next/link';
 import Modal from '@/common/Modal';
 import { Suspense, useEffect, useState } from 'react';
 import AddChannel from 'components/forms/AddChannel';

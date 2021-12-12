@@ -7,5 +7,5 @@ html {
 }
 
 .input {
-  @apply bg-gray-900 rounded border-gray-700;
+  @apply bg-gray-900 rounded-sm text-gray-200 border-gray-700;
 }
