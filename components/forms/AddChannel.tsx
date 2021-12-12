@@ -68,7 +68,7 @@ const AddChannel = () => {
           helperText={
             <>
               {' '}
-              Don't know your channel id? Get it from{' '}
+              Don&apos;t know your channel id? Get it from{' '}
               <a
                 className='text-blue-600'
                 href='https://www.youtube.com/account_advanced'>
