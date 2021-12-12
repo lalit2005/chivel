@@ -17,7 +17,12 @@ const DashboardLayout: React.FC<{
 
   return (
     <div className='flex text-white bg-black'>
-      <div className='w-1/5 h-screen px-8 pt-24 border-r border-gray-800'>
+      <div className='w-1/5 h-screen px-8 pt-24 border-r border-gray-800 sticky top-0'>
+        <Link href='/dashboard'>
+          <a className='text-sm text-gray-400 relative -top-5 left-2 hover:underline'>
+            {'<-'} Go back
+          </a>
+        </Link>
         <div className='space-y-4'>
           <Link href={`/site/${id}/setup`}>
             <a
@@ -81,7 +86,7 @@ const DashboardLayout: React.FC<{
           </Link>
         </div>
       </div>
-      <div className='pt-24 pl-20'>
+      <div className='pt-28 pl-20'>
         <h1 className='text-4xl font-extrabold font-cal'>{heading}</h1>
         <p className='mt-5 text-gray-300 mb-14 desc'>
           <ReactMarkdown>{description}</ReactMarkdown>
