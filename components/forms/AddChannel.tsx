@@ -86,6 +86,9 @@ const AddChannel = ({ setIsOpen }: Props) => {
             channel_description: values.channelDescription,
             subdomain: values.subdomain,
             created_by: user.id,
+            navbarLinks: [
+              `Youtube||https://youtube.com/channel/${firstStepFormFormik.values.channelId}`,
+            ],
           })
           .single();
         if (data) {
