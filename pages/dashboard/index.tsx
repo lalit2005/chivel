@@ -1,7 +1,5 @@
 import { useUser } from '@/utils/contexts/useUser';
 import withPageAuthRequired from '@/utils/withPageAuthRequired';
-import ProfileDropdown from '@/common/ProfileDropdown';
-import Logo from '@/common/Logo';
 import Navbar from 'components/pages/dashboard/Navbar';
 import Link from 'next/link';
 import Modal from '@/common/Modal';
@@ -37,7 +35,7 @@ const Page = () => {
           <div className='mt-20'>
             <Link href='#'>
               <a>
-                <div className='w-full max-w-sm px-5 py-3 border border-gray-700 rounded group'>
+                <div className='w-full max-w-sm px-5 py-3 border border-gray-700 rounded group hover:scale-105 transform transition-all'>
                   <h3 className='mt-3 mb-4 text-2xl font-bold text-gray-400 group-hover:text-gray-100'>
                     Fireship
                   </h3>
