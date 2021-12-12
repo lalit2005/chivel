@@ -1,4 +1,4 @@
-import { useUser } from '@/utils/contexts/useUser';
+// import { useUser } from '@/utils/contexts/useUser';
 
 const TwitterPreview: React.FC<{
   ogImageUrl: string;
@@ -6,9 +6,9 @@ const TwitterPreview: React.FC<{
   title: string;
   desc: string;
 }> = ({ ogImageUrl, subdomain, title, desc }) => {
-  const {
-    user: { user_metadata },
-  } = useUser();
+  // const {
+  //   user: { user_metadata },
+  // } = useUser();
   return (
     <div>
       <div className='w-full max-w-xl px-5 py-3 border border-gray-800 opacity-90 rounded-2xl'>
@@ -46,9 +46,7 @@ const TwitterPreview: React.FC<{
           </div>
         </div>
         <div className='py-3'>
-          <p className='text-lg'>
-            Check this website out. Made by {user_metadata?.full_name}
-          </p>
+          <p className='text-lg'>Check this website out.</p>
           <p className='text-lg text-twitter-blue'>
             https://{subdomain}.chivel.tk
           </p>
