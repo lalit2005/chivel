@@ -1,50 +1,97 @@
+import FormGroup from '@/common/FormGroup';
 import DashboardLayout from '@/layouts/DashboardLayout';
-import { useState } from 'react';
+import Button from '@/ui/Button';
+import { useFormik } from 'formik';
+import supabase from 'libs/supabase';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
+import toast from 'react-hot-toast';
+import * as Yup from 'yup';
 
 const Setup = () => {
+  const router = useRouter();
+  const { id } = router.query;
   const [text, setText] = useState('');
   const [link, setLink] = useState('');
+  const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    fetchData();
+  }, []);
+
+  const fetchData = async () => {
+    const { data, error } = await supabase
+      .from('channels')
+      .select('announcement_url,announcement_text')
+      .eq('id', id)
+      .single();
+    if (data) {
+      formik.setValues({
+        link: data.announcement_url,
+        text: data.announcement_text,
+      });
+    }
+  };
+
+  const formik = useFormik({
+    initialValues: {
+      text: '',
+      link: '',
+    },
+    onSubmit: async (values) => {
+      setLoading(true);
+      const { data, error } = await supabase
+        .from('channels')
+        .update({
+          announcement_text: values.text,
+          announcement_url: values.link,
+        })
+        .match({ id });
+      if (data) {
+        toast.success('Announcement updated successfully');
+      } else {
+        console.log(error);
+        toast.error('Announcement update failed');
+      }
+      setLoading(false);
+    },
+    validationSchema: Yup.object({
+      text: Yup.string().required('Announcement text is required'),
+      link: Yup.string().required('Announcement link is required'),
+    }),
+  });
   return (
     <DashboardLayout
       heading='Announcements'
       description="Want to add a **banner** at the top of your site? Here's the place to do it."
       page='announcement'>
-      <form>
-        <label className='text-gray-400 mb-2 block' htmlFor='announcement-text'>
-          Text that has to be displayed
-        </label>
-        <input
+      <form onSubmit={formik.handleSubmit}>
+        <FormGroup
+          id='text'
           type='text'
-          id='announcement-text'
-          value={text}
-          required
-          onChange={(e) => setText(e.target.value)}
+          className='input'
+          formik={formik}
+          label=' Text that has to be displayed'
           placeholder='Become a javascript hero with my latest course'
-          className='input w-full block'
         />
-        <label className='text-gray-400 mt-8 mb-2 block' htmlFor='link'>
-          Link the user should be taken to when the announcement <br /> banner
-          is clicked
-        </label>
-        <input
-          type='url'
-          id='link'
-          value={link}
-          required
-          onChange={(e) => setLink(e.target.value)}
-          placeholder='Link'
-          className='input w-full block'
-        />
-        <button
-          onClick={(e) => {
-            e.preventDefault();
-            // TODO: Add announcement to database
-            console.log(text, link);
-          }}
-          className='bg-green-600 text-white px-4 py-2 mt-8 rounded-sm hover:bg-green-700'
-          type='submit'>
+        <div className='mt-10'>
+          <FormGroup
+            id='link'
+            type='text'
+            className='input'
+            formik={formik}
+            label={
+              <>
+                Link the user should be taken to when the announcement <br />{' '}
+                banner is clicked
+              </>
+            }
+            placeholder='https://www.udemy.com/course/javascript-the-complete-guide-2020-edition/'
+          />
+        </div>
+        <Button loading={loading} classname='mt-10' type='submit'>
           Save
-        </button>
+        </Button>
       </form>
     </DashboardLayout>
   );
