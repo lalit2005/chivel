@@ -10,7 +10,7 @@ datasource db {
 model channels {
   id                  String    @id(map: "Sites_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
   channel_name        String?   @unique(map: "Sites_siteName_key") @db.VarChar
-  created_by          String    @db.VarChar
+  created_by          String    @db.Uuid
   created_at          DateTime? @default(now()) @db.Timestamptz(6)
   custom_css          String?   @db.VarChar
   custom_head         String?   @db.VarChar
