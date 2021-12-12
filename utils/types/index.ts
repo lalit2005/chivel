@@ -3,7 +3,7 @@ export interface LayoutProps {
   children: React.ReactNode;
 }
 
-export interface Channel {
+export type Channel = {
   id: string;
   channel_id: string;
   channel_name: string;
@@ -17,4 +17,4 @@ export interface Channel {
   announcement_text: string;
   announcement_url: string;
   og_image_url: string;
-}
+};

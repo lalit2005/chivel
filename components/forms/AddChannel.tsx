@@ -4,6 +4,7 @@ import { useUser } from '@/utils/contexts/useUser';
 import axios from 'axios';
 import { useFormik } from 'formik';
 import supabase from 'libs/supabase';
+import { useRouter } from 'next/router';
 import { useState } from 'react';
 import toast from 'react-hot-toast';
 import * as Yup from 'yup';
@@ -18,6 +19,7 @@ const AddChannel = ({ setIsOpen }: Props) => {
   const [currentForm, setCurrentForm] = useState<currentFormType>('channelId');
   const [isLoading, setIsLoading] = useState(false);
   const { user } = useUser();
+  const router = useRouter();
   const firstStepFormFormik = useFormik({
     initialValues: {
       channelId: '',
@@ -87,6 +89,7 @@ const AddChannel = ({ setIsOpen }: Props) => {
           })
           .single();
         if (data) {
+          router.push('/site/' + data.id + '/settings');
           toast.success('Channel Added');
         } else {
           console.log(error);
