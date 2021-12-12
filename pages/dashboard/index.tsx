@@ -1,7 +1,6 @@
 import { useUser } from '@/utils/contexts/useUser';
 import withPageAuthRequired from '@/utils/withPageAuthRequired';
 import Navbar from 'components/pages/dashboard/Navbar';
-import Link from 'next/link';
 import Modal from '@/common/Modal';
 import { useEffect, useState } from 'react';
 import AddChannel from 'components/forms/AddChannel';
@@ -27,6 +26,7 @@ const Page = () => {
   };
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
   return (
     <div className='min-h-screen text-white bg-black'>
