@@ -22,6 +22,7 @@ export default function Button({
         (loading ? 'opacity-50 cursor-not-allowed' : '')
       }
       disabled={loading || props.disabled}
+      type={props.type}
       {...props}>
       {loading ? (
         <span className='animate-spin text-xl'>

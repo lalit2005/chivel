@@ -3,6 +3,7 @@ import type { AppProps } from 'next/app';
 import '@grikomsn/cal-sans';
 import { UserContextProvider } from '@/utils/contexts/useUser';
 import { SWRConfig } from 'swr';
+import { Toaster } from 'react-hot-toast';
 
 function MyApp({ Component, pageProps }: AppProps) {
   return (
@@ -12,6 +13,7 @@ function MyApp({ Component, pageProps }: AppProps) {
           value={{ fetcher: (url) => fetch(url).then((res) => res.json()) }}>
           <Component {...pageProps} />
         </SWRConfig>
+        <Toaster />
       </UserContextProvider>
     </div>
   );

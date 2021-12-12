@@ -54,7 +54,7 @@ const Page = () => {
         title='Add a channel'
         isOpen={isCreateModalOpen}
         setIsOpen={setIsCreateModalOpen}>
-        <AddChannel />
+        <AddChannel setIsOpen={setIsCreateModalOpen} />
       </Modal>
     </div>
   );
