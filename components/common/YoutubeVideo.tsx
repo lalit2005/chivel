@@ -19,8 +19,10 @@ const YoutubeVideo: React.FC<{
   const embedUrl = `https://www.youtube-nocookie.com/embed/${videoUrl}`;
 
   return (
-    <>
-      <div onClick={openModal} className='relative mx-auto group'>
+    <div className='mx-auto mb-4'>
+      <div
+        onClick={openModal}
+        className='relative mx-auto group cursor-pointer'>
         <p className='absolute top-0 left-0 z-10 px-1 mt-1 ml-1 truncate bg-black rounded shadow-lg opacity-0 group-hover:opacity-100'>
           {title}
         </p>
@@ -75,7 +77,7 @@ const YoutubeVideo: React.FC<{
           </div>
         </Dialog>
       </Transition>
-    </>
+    </div>
   );
 };
 

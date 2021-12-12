@@ -2,6 +2,7 @@ import YoutubeVideo from '@/common/YoutubeVideo';
 import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import CountUp from 'react-countup';
+import supabase from 'libs/supabase';
 
 // @ts-ignore
 const Page = ({ data }) => {
@@ -20,9 +21,9 @@ const Page = ({ data }) => {
     <div className='text-white bg-black'>
       <div className='flex flex-col justify-between w-full max-w-4xl min-h-screen py-6 mx-auto sm:px-0'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <nav className='container flex items-center justify-between px-4 mx-auto md:px-6'>
+        <nav className='container flex items-center justify-between px-4 mx-auto md:px-6 sticky top-0 bg-black'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={data.avatar} width='50' height='50' alt={data.title} />
+          <img src={data?.avatar} width='50' height='50' alt={data?.title} />
           <ul className='flex gap-4'>
             {navLinks.map((navLink, index) => {
               return (
@@ -43,15 +44,15 @@ const Page = ({ data }) => {
             <div className='relative'>
               <div className='absolute max-w-xl mx-auto -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-50 transition filter blur-2xl duration-1000 animate-tilt'></div>
               <h1 className='font-extrabold capitalize text-7xl'>
-                {data.title}
+                {data?.title}
               </h1>
             </div>
             <p className='max-w-2xl px-4 mx-auto mt-8 text-lg text-gray-400 md:px-6'>
-              {data.description}
+              {data?.description}
             </p>
             <div className='my-20'>
               <a
-                href={`https://youtube.com/channel/${data.id}`}
+                href={`https://youtube.com/channel/${data?.id}`}
                 target='_blank'
                 rel='noopener noreferrer'
                 className='inline-block px-12 py-4 text-2xl font-bold text-gray-200 transition-all duration-150 transform bg-gray-900 border border-gray-800 rounded font-cal hover:text-gray-100 hover:scale-105'>
@@ -113,24 +114,26 @@ const Page = ({ data }) => {
           strokeWidth='0'></path>{' '}
       </svg>
       <div className=''>
-        <h1 className='text-4xl font-extrabold text-center'>
-          Some of the latest ones :)
+        <h1 className='text-4xl font-extrabold text-center mt-14'>
+          Some of the latest ones
         </h1>
-        <div className='grid w-full max-w-4xl grid-cols-1 gap-3 pb-10 mx-auto mt-20 gap-y-10 sm:grid-cols-2'>
-          {data.videos.slice(0, 4).map((video: any) => {
+        <div className='w-full max-w-4xl gap-3 pb-10 mx-auto mt-20 flex flex-wrap'>
+          {data?.videos.slice(0, 4).map((video: any) => {
             return (
-              <div key={video?.id.videoId}>
-                <YoutubeVideo
-                  videoUrl={video?.id.videoId}
-                  imageUrl={video?.snippet.thumbnails.medium.url}
-                  title={video?.snippet.title}
-                />
-              </div>
+              <YoutubeVideo
+                videoUrl={video?.id.videoId}
+                imageUrl={video?.snippet.thumbnails.medium.url}
+                title={video?.snippet.title}
+                key={video?.id.videoId}
+              />
             );
           })}
         </div>
       </div>
-      <section></section>
+      <section>
+        {/* eslint-disable-next-line @next/next/no-img-element */}
+        <img src={data?.banner} alt='' className='w-screen h-60 object-cover' />
+      </section>
     </div>
   );
 };
@@ -138,11 +141,25 @@ const Page = ({ data }) => {
 export default Page;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const id = 'UCsBjURrPoezykLs9EqgamOA';
+  const { data, error } = await supabase
+    .from('channels')
+    .select('*')
+    .eq('subdomain', params?.channel)
+    .single();
+  if (!data && error) {
+    return {
+      props: {
+        error: error.message,
+      },
+    };
+    // TODO:: handle error
+  }
+  const id = data.channel_id;
   const channelFetchUrl = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CbrandingSettings%2Cstatistics&id=${id}&key=${process.env.YOUTUBE_API_KEY}`;
   const videoFetchUrl = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${process.env.YOUTUBE_API_KEY}`;
   const channelData = await axios.get(channelFetchUrl);
   const videoData = await axios.get(videoFetchUrl);
+
   console.log(videoData.data);
   const requiredData = {
     id: channelData.data.items[0].id,
