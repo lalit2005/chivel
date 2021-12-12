@@ -1,10 +1,13 @@
 import TwitterPreview from '@/common/TwitterPreview';
 import DashboardLayout from '@/layouts/DashboardLayout';
 import uploadImage from '@/utils/upload-image';
+import { useRouter } from 'next/router';
 import Dropzone from 'react-dropzone';
 import { BiCloudUpload } from 'react-icons/bi';
 
 const Analytics = () => {
+  const router = useRouter();
+  const { id } = router.query;
   return (
     <DashboardLayout
       page='seo'
@@ -22,7 +25,7 @@ const Analytics = () => {
 
       <Dropzone
         onDrop={(files) => {
-          uploadImage(files);
+          uploadImage(files, id);
         }}>
         {({ getRootProps, getInputProps }) => (
           <div {...getRootProps()}>

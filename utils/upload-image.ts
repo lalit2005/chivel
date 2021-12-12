@@ -1,8 +1,9 @@
 import supabase from 'libs/supabase';
+import { nanoid } from 'nanoid';
 import toast from 'react-hot-toast';
 
 // @ts-ignore
-const uploadImage = async (files) => {
+const uploadImage = async (files, id) => {
   const file = files[0];
 
   // if the file is is not an png, jpg or jpeg, reject it
@@ -17,10 +18,22 @@ const uploadImage = async (files) => {
     return;
   }
 
+  const filename = `${nanoid()}.${file.type.split('/')[1]}`;
+
   // if the file is valid, upload it to supabase storage
   const { data, error } = await supabase.storage
     .from('og-images')
-    .upload('ogimages', file);
+    .upload(filename, file);
+  if (data) {
+    const { data: dbData, error: dbError } = await supabase
+      .from('channels')
+      .update({
+        og_image_url: supabase.storage.from('og-images').getPublicUrl(data.Key),
+      });
+    return supabase.storage.from('og-images').getPublicUrl(data.Key);
+  }
+  toast.error('Error occured');
+  return;
   console.log(data, error);
 };
 
