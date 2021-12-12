@@ -1,11 +1,9 @@
 import FormGroup from '@/common/FormGroup';
 import Button from '@/ui/Button';
 import axios from 'axios';
-import { channel } from 'diagnostics_channel';
 import { useFormik } from 'formik';
 import { useState } from 'react';
 import * as Yup from 'yup';
-import { string } from 'yup/lib/locale';
 
 type currentFormType = 'channelId' | 'channelDetail';
 
@@ -63,17 +61,19 @@ const AddChannel = () => {
         <FormGroup
           formik={firstStepFormFormik}
           id='channelId'
+          className='input'
           label='Channel ID'
           type='text'
           helperText={
             <>
-              {' '}
-              Don&apos;t know your channel id? Get it from{' '}
-              <a
-                className='text-blue-600'
-                href='https://www.youtube.com/account_advanced'>
-                here
-              </a>
+              <p className='text-gray-500 my-3'>
+                Don&apos;t know your channel id? Get it from{' '}
+                <a
+                  className='text-blue-500 hover:underline'
+                  href='https://www.youtube.com/account_advanced'>
+                  here
+                </a>
+              </p>
             </>
           }
         />
@@ -90,23 +90,26 @@ const AddChannel = () => {
             label='Channel Name'
             formik={secondStepFormFormik}
             type='text'
+            className='input'
             id='channelName'
           />
           <p className='flex'>
             <div className='flex-1 w-full'>
               <FormGroup
                 label='Subdomain'
+                className='input'
                 formik={secondStepFormFormik}
                 type='text'
                 id='subdomain'
               />
             </div>
-            <span className='self-end pl-3'>.chivel.tk</span>
+            <span className='self-end pl-3 relative -top-2'>.chivel.tk</span>
           </p>
           <FormGroup
             label='Channel Description'
             formik={secondStepFormFormik}
             isTextarea={true}
+            className='input'
             id='channelDescription'
           />
           <Button loading={isLoading}>Add Channel</Button>

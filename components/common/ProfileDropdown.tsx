@@ -17,8 +17,8 @@ function ProfileDropdown() {
           <img
             src={user_metadata.avatar_url}
             alt={email}
-            width={50}
-            height={50}
+            width={40}
+            height={40}
             className='rounded-full'
           />
         </Tooltip>
