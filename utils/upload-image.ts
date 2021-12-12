@@ -22,6 +22,13 @@ const uploadImage = async (files) => {
     .from('og-images')
     .upload('ogimages', file);
   console.log(data, error);
+  if (error) {
+    toast.error(error.message);
+    return;
+  } else {
+    toast.success('Image uploaded!');
+    return;
+  }
 };
 
 export default uploadImage;
