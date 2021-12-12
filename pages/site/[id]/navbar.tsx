@@ -68,7 +68,7 @@ const Setup = () => {
             Add Link
           </button>
           <button
-            className='bg-green-500 hover:bg-green-700 text-white w-full py-2 rounded mt-4'
+            className='bg-green-600 hover:bg-green-700 text-white w-full py-2 rounded mt-4'
             type='submit'
             onClick={(e) => {
               e.preventDefault();

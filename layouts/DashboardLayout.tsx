@@ -2,6 +2,7 @@ import Link from 'next/link';
 import { BiCode, BiNavigation } from 'react-icons/bi';
 import { FiSettings, FiInbox } from 'react-icons/fi';
 import { VscGraphLine } from 'react-icons/vsc';
+import { HiOutlineSpeakerphone } from 'react-icons/hi';
 import clsx from 'clsx';
 import { useRouter } from 'next/router';
 import ReactMarkdown from 'react-markdown';
@@ -9,7 +10,7 @@ import ReactMarkdown from 'react-markdown';
 const DashboardLayout: React.FC<{
   heading: string;
   description: string;
-  page: 'setup' | 'seo' | 'navbar' | 'settings' | 'snippet';
+  page: 'setup' | 'seo' | 'navbar' | 'settings' | 'snippet' | 'announcement';
 }> = ({ page, heading, description, ...props }) => {
   const router = useRouter();
   const { id } = router.query;
@@ -46,6 +47,16 @@ const DashboardLayout: React.FC<{
               )}>
               <BiNavigation className='relative inline-block mr-3 bottom-px' />
               Navbar
+            </a>
+          </Link>
+          <Link href={`/site/${id}/announcement`}>
+            <a
+              className={clsx(
+                'block w-full px-4 py-2 text-gray-300 rounded hover:bg-gray-900 hover:text-gray-50',
+                page === 'announcement' && 'bg-gray-900 text-gray-50 font-bold'
+              )}>
+              <HiOutlineSpeakerphone className='relative inline-block mr-3 bottom-px' />
+              Announcement
             </a>
           </Link>
           <Link href={`/site/${id}/seo`}>
