@@ -12,6 +12,7 @@ const Setup = () => {
 
   useEffect(() => {
     fetchLinks();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchLinks = async () => {
