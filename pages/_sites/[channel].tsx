@@ -176,10 +176,15 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
   const id = data.channel_id;
   const channelFetchUrl = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CbrandingSettings%2Cstatistics&id=${id}&key=${process.env.YOUTUBE_API_KEY}`;
   const videoFetchUrl = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${process.env.YOUTUBE_API_KEY}`;
-  const channelData = await axios.get(channelFetchUrl);
-  const videoData = await axios.get(videoFetchUrl);
+  const get = async (url: string) => await fetch(url).then((res) => res.json());
+  const channelData = {
+    data: await get(channelFetchUrl),
+  };
+  const videoData = {
+    data: await get(videoFetchUrl),
+  };
 
-  // console.log(videoData.data);
+  console.log(videoData.data);
   const requiredData = {
     id: channelData.data.items[0].id,
     title: channelData.data.items[0].snippet.title,
