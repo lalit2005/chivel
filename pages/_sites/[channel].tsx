@@ -129,7 +129,6 @@ const Page = ({ data }) => {
             );
           })}
         </div>
-        {/* <pre>{JSON.stringify(data?.videos, null, 2)}</pre> */}
       </div>
       <section></section>
     </div>
@@ -160,6 +159,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     props: {
       data: requiredData,
     },
+    revalidate: 60 * 60,
   };
 };
 
