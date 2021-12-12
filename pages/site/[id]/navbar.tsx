@@ -12,7 +12,6 @@ const Setup = () => {
 
   useEffect(() => {
     fetchLinks();
-    setLoading(false);
   }, []);
 
   const fetchLinks = async () => {
@@ -26,6 +25,7 @@ const Setup = () => {
     } else {
       console.log(error);
     }
+    setLoading(false);
   };
 
   const onSubmit = async (e: BaseSyntheticEvent) => {
@@ -55,6 +55,7 @@ const Setup = () => {
       page='navbar'>
       <form onSubmit={onSubmit}>
         {loading && <div>Loading...</div>}
+        {!loading && !navLinks && <div>No links added</div>}
         {navLinks.map((link, index) => {
           const [text, url] = link.split('||');
           return (
