@@ -1,5 +1,6 @@
 import { Dialog, Transition } from '@headlessui/react';
 import { Fragment, useState } from 'react';
+import truncate from 'lodash.truncate';
 
 const YoutubeVideo: React.FC<{
   imageUrl: string;
@@ -23,8 +24,8 @@ const YoutubeVideo: React.FC<{
       <div
         onClick={openModal}
         className='relative mx-auto group cursor-pointer'>
-        <p className='absolute top-0 left-0 z-10 px-1 mt-1 ml-1 truncate bg-black rounded shadow-lg opacity-0 group-hover:opacity-100'>
-          {title}
+        <p className='absolute top-0 left-0 z-10 px-1 mt-1 ml-1 bg-black rounded shadow-lg opacity-0 group-hover:opacity-100'>
+          {truncate(title, { length: 50 })}
         </p>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <img

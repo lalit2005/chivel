@@ -2,48 +2,61 @@ import YoutubeVideo from '@/common/YoutubeVideo';
 import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import CountUp from 'react-countup';
+import Head from 'next/head';
 import supabase from 'libs/supabase';
 
 // @ts-ignore
 const Page = ({ data }) => {
-  const navLinks = [
-    {
-      text: 'Apple',
-      href: 'https://apple.com',
-    },
-    {
-      text: 'Google',
-      href: 'https://google.com',
-    },
-  ];
-
   return (
     <div className='text-white bg-black'>
-      <div className='flex flex-col justify-between w-full max-w-4xl min-h-screen py-6 mx-auto sm:px-0'>
+      <Head>
+        <title>{data?.title}</title>
+        <style dangerouslySetInnerHTML={{ __html: data?.custom_css }}></style>
+        <div dangerouslySetInnerHTML={{ __html: data?.custom_head }}></div>
+      </Head>
+      {data.announcement[0] && data.announcement[0] && (
+        <a href={`${data.announcement[1]}`}>
+          <div className='bg-blue-500 text-center py-3 text-white hover:bg-blue-600 w-screen '>
+            <p className='text-base'>
+              {data.announcement[0]} {'->'}
+            </p>
+          </div>
+        </a>
+      )}
+      <div className='flex flex-col justify-between w-full max-w-4xl py-6 mx-auto sm:px-0'>
         {/* eslint-disable-next-line @next/next/no-img-element */}
         <nav className='container flex items-center justify-between px-4 mx-auto md:px-6 sticky top-0 bg-black'>
           {/* eslint-disable-next-line @next/next/no-img-element */}
-          <img src={data?.avatar} width='50' height='50' alt={data?.title} />
+          <img
+            src={data?.avatar}
+            className='rounded-full'
+            width='50'
+            height='50'
+            alt={data?.title}
+            loading='eager'
+          />
           <ul className='flex gap-4'>
-            {navLinks.map((navLink, index) => {
+            {/* @ts-ignore */}
+            {data?.navLinks.map((link, index) => {
+              const [name, url] = link.split('||');
               return (
-                <li key={index}>
-                  <a
-                    href={navLink.href}
-                    key={navLink.text}
-                    className='opacity-75 hover:opacity-100'>
-                    {navLink.text}
-                  </a>
-                </li>
+                <a
+                  href={url}
+                  rel='noopener noreferrer'
+                  target='_blank'
+                  key={index}
+                  className='inline-block mx-2 px-2 py-1 text-white bg-black hover:bg-gray-800'>
+                  {name}
+                </a>
               );
             })}
           </ul>
         </nav>
-        <main className='-mt-10'>
+        <main style={{ minHeight: 'calc(100vh - 82px)' }}>
           <div className='text-center'>
             <div className='relative'>
               <div className='absolute max-w-xl mx-auto -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-50 transition filter blur-2xl duration-1000 animate-tilt'></div>
-              <h1 className='font-extrabold capitalize text-7xl'>
+              <h1 className='font-extrabold capitalize text-7xl mt-32'>
                 {data?.title}
               </h1>
             </div>
@@ -55,7 +68,7 @@ const Page = ({ data }) => {
                 href={`https://youtube.com/channel/${data?.id}`}
                 target='_blank'
                 rel='noopener noreferrer'
-                className='inline-block px-12 py-4 text-2xl font-bold text-gray-200 transition-all duration-150 transform bg-gray-900 border border-gray-800 rounded font-cal hover:text-gray-100 hover:scale-105'>
+                className='inline-block px-12 py-4 text-2xl mt-20 font-bold text-gray-200 transition-all duration-150 transform bg-gray-900 border border-gray-800 rounded font-cal hover:text-gray-100 hover:scale-105'>
                 Visit channel &rarr;
               </a>
             </div>
@@ -132,7 +145,11 @@ const Page = ({ data }) => {
       </div>
       <section>
         {/* eslint-disable-next-line @next/next/no-img-element */}
-        <img src={data?.banner} alt='' className='w-screen h-60 object-cover' />
+        <img
+          src={data?.banner}
+          alt=''
+          className='w-screen h-60 object-cover mt-24'
+        />
       </section>
     </div>
   );
@@ -146,6 +163,7 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     .select('*')
     .eq('subdomain', params?.channel)
     .single();
+
   if (!data && error) {
     return {
       props: {
@@ -154,23 +172,28 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     };
     // TODO:: handle error
   }
+
   const id = data.channel_id;
   const channelFetchUrl = `https://youtube.googleapis.com/youtube/v3/channels?part=snippet%2CbrandingSettings%2Cstatistics&id=${id}&key=${process.env.YOUTUBE_API_KEY}`;
   const videoFetchUrl = `https://youtube.googleapis.com/youtube/v3/search?part=snippet&channelId=${id}&maxResults=10&order=date&key=${process.env.YOUTUBE_API_KEY}`;
   const channelData = await axios.get(channelFetchUrl);
   const videoData = await axios.get(videoFetchUrl);
 
-  console.log(videoData.data);
+  // console.log(videoData.data);
   const requiredData = {
     id: channelData.data.items[0].id,
     title: channelData.data.items[0].snippet.title,
-    description: channelData.data.items[0].snippet.description,
+    description: data.channel_description,
     avatar: channelData.data.items[0].snippet.thumbnails.default.url,
     banner: channelData.data.items[0].brandingSettings.image.bannerExternalUrl,
     subscriberCount: channelData.data.items[0].statistics.subscriberCount,
     videoCount: channelData.data.items[0].statistics.videoCount,
     viewCount: channelData.data.items[0].statistics.viewCount,
     videos: videoData.data.items,
+    announcement: [data.announcement_text, data.announcement_url],
+    navLinks: data.navbarLinks,
+    style: data.custom_css,
+    head: data.custom_head,
   };
   return {
     props: {

@@ -1,10 +1,35 @@
 import DashboardLayout from '@/layouts/DashboardLayout';
+import supabase from 'libs/supabase';
+import { useRouter } from 'next/router';
+import { useEffect, useState } from 'react';
 
 const Setup = () => {
+  const router = useRouter();
+  const { id } = router.query;
+  const [title, setTitle] = useState('Loading...');
+
+  const fetchData = async () => {
+    const { data, error } = await supabase
+      .from('channels')
+      .select('channel_name')
+      .eq('id', id)
+      .single();
+    if (error) {
+      console.log(error);
+      return;
+    }
+    setTitle(data.channel_name);
+  };
+
+  useEffect(() => {
+    fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   return (
     <DashboardLayout
-      heading='Channel name'
-      description="Manage your channel's website easily"
+      heading={title}
+      description="Manage your channel's website easily from Chivel's dashboard."
       page='setup'>
       <div className='text-lg'>
         <p>

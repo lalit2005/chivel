@@ -10,7 +10,7 @@ const ChannelCard = ({ channel }: Props) => {
     <div>
       <Link href={`/site/${channel.id}/setup`}>
         <a>
-          <div className='w-full max-w-sm px-5 py-3 border border-gray-700 rounded group hover:scale-105 transform transition-all'>
+          <div className='w-full max-w-sm px-5 py-3 border border-gray-700 rounded group hover:scale-105 transform transition-all mb-4'>
             <h3 className='mt-3 mb-4 text-2xl font-bold text-gray-400 group-hover:text-gray-100'>
               {channel.channel_name}
             </h3>

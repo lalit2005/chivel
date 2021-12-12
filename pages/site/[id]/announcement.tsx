@@ -17,6 +17,7 @@ const Setup = () => {
 
   useEffect(() => {
     fetchData();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   const fetchData = async () => {
@@ -56,8 +57,8 @@ const Setup = () => {
       setLoading(false);
     },
     validationSchema: Yup.object({
-      text: Yup.string().required('Announcement text is required'),
-      link: Yup.string().required('Announcement link is required'),
+      text: Yup.string(),
+      link: Yup.string(),
     }),
   });
   return (
@@ -81,15 +82,12 @@ const Setup = () => {
             className='input'
             formik={formik}
             label={
-              <>
-                Link the user should be taken to when the announcement <br />{' '}
-                banner is clicked
-              </>
+              'Link the user should be taken to when the announcement banner is clicked'
             }
             placeholder='https://www.udemy.com/course/javascript-the-complete-guide-2020-edition/'
           />
         </div>
-        <Button loading={loading} classname='mt-10' type='submit'>
+        <Button loading={loading} className='mt-10' type='submit'>
           Save
         </Button>
       </form>
