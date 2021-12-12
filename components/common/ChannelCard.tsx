@@ -1,5 +1,7 @@
 import { Channel } from '@/utils/types';
 import Link from 'next/link';
+import truncate from 'lodash.truncate';
+
 interface Props {
   channel: Channel;
 }
@@ -13,7 +15,9 @@ const ChannelCard = ({ channel }: Props) => {
               {channel.channel_name}
             </h3>
             <p className='mb-3 text-gray-500 group-hover:text-gray-400'>
-              {channel.channel_description}
+              {truncate(channel.channel_description, {
+                length: 100,
+              })}
             </p>
           </div>
         </a>
