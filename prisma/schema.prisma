@@ -7,17 +7,18 @@ datasource db {
   url      = env("DATABASE_URL")
 }
 
-model YtSites {
-  id               String    @id(map: "Sites_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
-  siteName         String?   @unique(map: "Sites_siteName_key") @db.VarChar
-  ytChannelUrl     String?   @db.VarChar
-  createdBy        String    @db.VarChar
-  createdAt        DateTime? @default(now()) @db.Timestamptz(6)
-  customCss        String?   @db.VarChar
-  customHead       String?   @db.VarChar
-  announcementText String?   @db.VarChar
-  announcementUrl  String?   @db.VarChar
-  navbarLinks      String[]  @db.VarChar
-  ogImageUrl       String?   @db.VarChar
-  siteDescription  String?   @db.VarChar
+model channels {
+  id                  String    @id(map: "Sites_pkey") @default(dbgenerated("uuid_generate_v4()")) @db.Uuid
+  channel_name        String?   @unique(map: "Sites_siteName_key") @db.VarChar
+  created_by          String    @db.VarChar
+  created_at          DateTime? @default(now()) @db.Timestamptz(6)
+  custom_css          String?   @db.VarChar
+  custom_head         String?   @db.VarChar
+  announcement_text   String?   @db.VarChar
+  announcement_url    String?   @db.VarChar
+  navbarLinks         String[]  @db.VarChar
+  og_image_url        String?   @db.VarChar
+  channel_description String?   @db.VarChar
+  subdomain           String    @unique(map: "YtSites_subdomain_key") @default(dbgenerated("uuid_generate_v4()")) @db.VarChar
+  channel_id          String    @unique(map: "YtSites_channelId_key") @db.VarChar
 }
