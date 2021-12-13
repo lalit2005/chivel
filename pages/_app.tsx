@@ -23,7 +23,7 @@ function MyApp({ Component, pageProps }: AppProps) {
               url: 'https://chivel.tk/ogimage.png',
               height: 600,
               width: 1200,
-              alt: 'Chivel',
+              alt: 'Chivel: Get a landing page for your YouTube channel in seconds.',
             },
           ],
         }}
