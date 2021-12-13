@@ -4,6 +4,11 @@
 
 Live → https://chivel.tk
 
+**Eg.**
+- https://codedamn.chivel.tk
+- https://fireship.chivel.tk
+- https://vercel.chivel.tk
+
 [Chivel](https://chivel.tk/) helps you **generate a website for your Youtube channel** in matter of seconds. 
 
 Just let Chivel know your Youtube channel and choose a custom subdomain such as *fireship*.chivel.tk or *freecodecamp*.chivel.tk and a super fast and SEO friendly website gets generated in the blink of a eye just for you.
