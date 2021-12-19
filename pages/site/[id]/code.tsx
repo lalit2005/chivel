@@ -56,7 +56,7 @@ const Setup = () => {
       description='Add dynamic **script tags** and **styles** to your site such as analytics.'
       page='snippet'>
       <form onSubmit={formik.handleSubmit}>
-        <Button loading={loading} classname='mb-10' type='submit'>
+        <Button loading={loading} className='mb-10' type='submit'>
           Save
         </Button>
         <div>
@@ -68,7 +68,8 @@ const Setup = () => {
               isTextarea={true}
               className='font-mono bg-black rounded-md my-3 block w-full'
               id='style'
-              placeholder='Type your styles here'></FormGroup>
+              placeholder='Type your styles here'
+              label={''}></FormGroup>
 
             <h2 className='font-mono'>{'</style>'}</h2>
           </div>
@@ -81,6 +82,7 @@ const Setup = () => {
               isTextarea={true}
               className='font-mono bg-black rounded-md my-3 block w-full'
               placeholder='Type HTML tags that go into head of the website such analytics, etc.. '
+              label={''}
             />
 
             <h2 className='font-mono'>{'</head>'}</h2>
