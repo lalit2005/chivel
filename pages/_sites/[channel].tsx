@@ -1,16 +1,44 @@
 import YoutubeVideo from '@/common/YoutubeVideo';
-import axios from 'axios';
 import { GetStaticPaths, GetStaticProps } from 'next';
 import CountUp from 'react-countup';
 import Head from 'next/head';
 import supabase from 'libs/supabase';
+import { NextSeo } from 'next-seo';
+import { Channel } from '@/utils/types';
 
 // @ts-ignore
 const Page = ({ data }) => {
   return (
     <div className='text-white bg-black'>
+      <NextSeo
+        title={data?.title}
+        description={data?.description}
+        openGraph={{
+          url: `https://${data?.subdomain}.chivel.tk`,
+          title: data?.title,
+          description: data?.description,
+          images: [
+            {
+              url: data?.ogimage,
+              height: 600,
+              width: 1200,
+              alt: 'Chivel: Get a landing page for your YouTube channel in seconds.',
+            },
+          ],
+        }}
+        twitter={{
+          cardType: 'summary_large_image',
+          handle: '@lalitcodes',
+        }}
+      />
       <Head>
-        <title>{data?.title}</title>
+        <title>
+          {data?.title
+            .split(' ')
+            .map((w: string) => w[0].toUpperCase() + w.substr(1).toLowerCase())
+            .join(' ')}{' '}
+          : {data?.description}
+        </title>
         <style dangerouslySetInnerHTML={{ __html: data?.custom_css }}></style>
         <div dangerouslySetInnerHTML={{ __html: data?.custom_head }}></div>
       </Head>
@@ -158,7 +186,8 @@ const Page = ({ data }) => {
 export default Page;
 
 export const getStaticProps: GetStaticProps = async ({ params }) => {
-  const { data, error } = await supabase
+  // @ts-ignore
+  const { data, error }: { data: Channel } = await supabase
     .from('channels')
     .select('*')
     .eq('subdomain', params?.channel)
@@ -196,9 +225,13 @@ export const getStaticProps: GetStaticProps = async ({ params }) => {
     viewCount: channelData.data.items[0].statistics.viewCount,
     videos: videoData.data.items,
     announcement: [data.announcement_text, data.announcement_url],
-    navLinks: data.navbarLinks,
+    navLinks: data?.navbarLinks,
     style: data.custom_css,
     head: data.custom_head,
+    subdomain: params?.channel,
+    ogimage:
+      channelData.data.items[0].brandingSettings.image.bannerExternalUrl ||
+      data.og_image_url,
   };
   return {
     props: {

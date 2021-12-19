@@ -10,7 +10,7 @@ export type Channel = {
   channel_description: string;
   created_at: string;
   created_by: string;
-  nav_links: string[];
+  navbarLinks: string[];
   subdomain: string;
   custom_css: string;
   custom_head: string;
