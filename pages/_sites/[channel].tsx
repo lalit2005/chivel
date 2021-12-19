@@ -39,6 +39,7 @@ const Page = ({ data }) => {
             .join(' ')}{' '}
           : {data?.description}
         </title>
+        <link rel='shortcut icon' href={data?.avatar} type='image/png' />
         <style dangerouslySetInnerHTML={{ __html: data?.custom_css }}></style>
         <div dangerouslySetInnerHTML={{ __html: data?.custom_head }}></div>
       </Head>
