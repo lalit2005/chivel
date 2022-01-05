@@ -81,7 +81,7 @@ const Page = ({ data }) => {
             })}
           </ul>
         </nav>
-        <main style={{ minHeight: 'calc(100vh - 82px)' }}>
+        <main className='flex items-center justify-center' style={{ minHeight: 'calc(100vh - 82px)' }}>
           <div className='text-center'>
             <div className='relative'>
               <div className='absolute max-w-xl mx-auto -inset-0.5 bg-gradient-to-r from-pink-600 to-purple-600 rounded-lg opacity-50 transition filter blur-2xl duration-1000 animate-tilt'></div>
